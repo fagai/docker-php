@@ -24,7 +24,7 @@ RUN composer config -g repos.packagist composer https://packagist.jp
 
 # install prestissimo
 RUN mkdir -p $COMPOSER_HOME && \
-    composer global require hirak/prestissimio
+    composer global require hirak/prestissimo
 
 # install phalcon
 RUN curl -sSL "https://codeload.github.com/phalcon/cphalcon/tar.gz/v${PHALCON_VERSION}" | tar -xz \
