@@ -9,8 +9,8 @@ ENV COMPOSER_HOME=/root/composer \
 RUN apt-get update
 
 # package install
-RUN apt-get install -y zlib1g-dev curl libcurl3 libcurl4-gnutls-dev
-RUN docker-php-ext-install pdo pdo_mysql zip curl mbstring
+RUN apt-get install -y zlib1g-dev curl libcurl3 libcurl4-gnutls-dev libicu-dev
+RUN docker-php-ext-install pdo pdo_mysql zip curl mbstring intl
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
@@ -32,3 +32,8 @@ RUN curl -sSL "https://codeload.github.com/phalcon/cphalcon/tar.gz/v${PHALCON_VE
     && cd ../../ \
     && rm -r cphalcon-${PHALCON_VERSION}
 
+RUN apt-get install locales
+RUN locale-gen ja_JP.UTF-8
+ENV LANG ja_JP.UTF-8
+ENV LC_CTYPE ja_JP.UTF-8
+RUN localedef -f UTF-8 -i ja_JP ja_JP.utf8
