@@ -32,6 +32,11 @@ RUN curl -sSL "https://codeload.github.com/phalcon/cphalcon/tar.gz/v${PHALCON_VE
     && cd ../../ \
     && rm -r cphalcon-${PHALCON_VERSION}
 
+# install memcached
+RUN apt-get install -y libz-dev libmemcached-dev && \
+    pecl install memcached-2.2.0 && \
+    docker-php-ext-enable memcached
+
 RUN apt-get install locales
 RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
 RUN echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
