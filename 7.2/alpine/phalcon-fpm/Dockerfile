@@ -8,7 +8,7 @@ RUN apk upgrade && \
   apk add ca-certificates && \
   update-ca-certificates
 
-RUN apk add --update bash curl curl-dev gcc make
+RUN apk add --update bash curl curl-dev gcc make git unzip
 
 RUN docker-php-ext-install pdo pdo_mysql curl mbstring
 
@@ -18,19 +18,20 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer config -g repos.packagist composer https://packagist.jp
 RUN composer global require hirak/prestissimo
 
-ENV PHALCON_VERSION 3.3.1
+ENV PHALCON_VERSION 3.3.2
 
 RUN apk add --update autoconf g++ re2c
 
 # install phalcon
-RUN curl -sSL "https://codeload.github.com/phalcon/cphalcon/tar.gz/v${PHALCON_VERSION}" | tar -xz \
-    && cd cphalcon-${PHALCON_VERSION}/build \
-    && ./install \
-    && cp ../tests/_ci/phalcon.ini $(php-config --configure-options | grep -o "with-config-file-scan-dir=\([^ ]*\)" | awk -F'=' '{print $2}') \
-    && cd ../../ \
-    && rm -r cphalcon-${PHALCON_VERSION}
+RUN curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz \
+    && tar xzf v${PHALCON_VERSION}.tar.gz \
+    && docker-php-ext-install ${PWD}/cphalcon-${PHALCON_VERSION}/build/php7/64bits \
+    && rm -rf v${PHALCON_VERSION}.tar.gz cphalcon-${PHALCON_VERSION}
+
+# delete build packages
+RUN apk del gcc make g++ re2c autoconf
 
 # install phalcon devtools
-RUN composer global require phalcon/devtools \
-    && ln -s /root/.composer/vendor/phalcon/devtools/phalcon.php /usr/local/bin/phalcon \
-    && chmod ugo+x /usr/local/bin/phalcon
+#RUN composer global require phalcon/devtools \
+#    && ln -s /root/.composer/vendor/phalcon/devtools/phalcon.php /usr/local/bin/phalcon \
+#    && chmod ugo+x /usr/local/bin/phalcon
