@@ -18,7 +18,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer config -g repos.packagist composer https://packagist.jp
 RUN composer global require hirak/prestissimo
 
-ENV PHALCON_VERSION 3.3.2
+ENV PHALCON_VERSION 3.4.1
 
 RUN apk add --update autoconf g++ re2c
 

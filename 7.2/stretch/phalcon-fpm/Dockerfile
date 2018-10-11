@@ -4,7 +4,7 @@ FROM php:7.2-fpm
 ENV COMPOSER_HOME=/root/composer \
     PATH=$COMPOSER_HOME/vendor/bin:$PATH \
     COMPOSER_ALLOW_SUPERUSER=1 \
-    PHALCON_VERSION=3.3.2
+    PHALCON_VERSION=3.4.1
 
 # set package repository
 RUN apt-get update
