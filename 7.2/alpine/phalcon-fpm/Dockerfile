@@ -12,6 +12,9 @@ RUN apk add --update bash curl curl-dev gcc make git unzip
 
 RUN docker-php-ext-install pdo pdo_mysql curl mbstring
 
+RUN apk add --update --no-cache libmemcached-dev autoconf g++ re2c zlib-dev && \
+    pecl install memcached && docker-php-ext-enable memcached
+
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # fast composer
@@ -19,8 +22,6 @@ RUN composer config -g repos.packagist composer https://packagist.jp
 RUN composer global require hirak/prestissimo
 
 ENV PHALCON_VERSION 3.4.1
-
-RUN apk add --update autoconf g++ re2c
 
 # install phalcon
 RUN curl -LO https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz \
