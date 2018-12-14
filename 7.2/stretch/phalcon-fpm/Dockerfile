@@ -13,7 +13,9 @@ RUN apt-get update
 RUN buildDeps="libxml2-dev zlib1g-dev" && \ 
     apt-get install -y ${buildDeps} curl libcurl4-openssl-dev unzip git && \
     docker-php-ext-install pdo pdo_mysql zip curl mbstring && \
-    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $buildDeps
+    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $buildDeps && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
