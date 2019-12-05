@@ -6,9 +6,14 @@ FROM php:7.4-fpm-alpine3.10
 RUN apk add --no-cache ca-certificates && \
   update-ca-certificates
 
-RUN apk add --no-cache bash curl curl-dev oniguruma-dev
+RUN apk add --no-cache bash curl curl-dev oniguruma-dev icu-dev libpng-dev
 
-RUN docker-php-ext-install pdo pdo_mysql curl mbstring
+RUN docker-php-ext-install pdo pdo_mysql curl mbstring bcmath opcache intl gd
+
+RUN apk add --no-cache autoconf gcc g++ make imagemagick-dev && \
+    pecl install imagick && \
+    docker-php-ext-enable imagick && \
+    apk del --purge autoconf gcc g++ make
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
