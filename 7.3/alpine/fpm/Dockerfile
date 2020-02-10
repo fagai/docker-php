@@ -1,4 +1,4 @@
-FROM php:7.3-fpm-alpine3.10
+FROM php:7.3-fpm-alpine3.11
 
 # set japan repository
 RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/ftp.tsukuba.wide.ad.jp\/Linux/g' /etc/apk/repositories
