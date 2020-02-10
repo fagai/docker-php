@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine3.10
+FROM php:7.4-fpm-alpine3.11
 
 RUN apk add --no-cache ca-certificates && \
   update-ca-certificates
