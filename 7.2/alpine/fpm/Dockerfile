@@ -1,20 +1,19 @@
-FROM php:7.2-fpm-alpine3.7
+FROM php:7.2-fpm-alpine
 
-# set japan repository
-RUN sed -i 's/http\:\/\/dl-cdn.alpinelinux.org/http\:\/\/ftp.tsukuba.wide.ad.jp\/Linux/g' /etc/apk/repositories
-
-RUN apk upgrade && \
-  apk update && \
-  apk add ca-certificates && \
+RUN apk add --no-cache ca-certificates && \
   update-ca-certificates
 
-RUN apk add --update bash curl curl-dev
+RUN apk add --no-cache bash curl curl-dev oniguruma-dev icu-dev libpng-dev libxml2-dev libzip-dev openssl openssl-dev
 
-RUN docker-php-ext-install pdo pdo_mysql curl mbstring
+RUN docker-php-ext-install pdo pdo_mysql curl mbstring bcmath opcache intl gd ctype json xml zip
+
+RUN apk add --no-cache autoconf gcc g++ make imagemagick-dev && \
+    pecl install imagick && \
+    docker-php-ext-enable imagick && \
+    apk del --purge autoconf gcc g++ make && \
+    pecl clear-cache
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# fast composer
-RUN composer config -g repos.packagist composer https://packagist.jp
-RUN composer global require hirak/prestissimo
-
+RUN composer global require hirak/prestissimo && \
+    composer clear-cache
