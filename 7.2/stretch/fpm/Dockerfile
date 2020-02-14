@@ -17,6 +17,7 @@ RUN apt-get update \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && pecl clear-cache \
+    && apt-get purge -y pkg-config \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
