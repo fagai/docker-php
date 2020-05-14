@@ -13,11 +13,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update \
-    && apt-get install -y  --no-install-recommends libmagickwand-dev \
+    && apt-get install -y --no-install-recommends libmagickwand-dev \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && pecl clear-cache \
-    && apt-get purge -y pkg-config \
+    && apt-get purge -y gcc libgcc-8-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
