@@ -5,7 +5,7 @@ RUN apk add --no-cache ca-certificates && \
 
 RUN apk add --no-cache bash curl curl-dev oniguruma-dev icu-dev libpng-dev libxml2-dev libzip-dev openssl openssl-dev
 
-RUN docker-php-ext-install pdo pdo_mysql curl mbstring bcmath opcache intl gd ctype json xml zip
+RUN docker-php-ext-install pdo pdo_mysql curl mbstring bcmath opcache intl gd ctype json xml zip exif
 
 RUN apk add --no-cache autoconf gcc g++ make imagemagick-dev && \
     pecl install imagick && \
