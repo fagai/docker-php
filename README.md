@@ -27,5 +27,6 @@ https://hub.docker.com/r/fagai/php/
 # Phalcon用はこれに追加で
 
 * gd
+* memcached
 * exif
 * imagick
