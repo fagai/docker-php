@@ -9,3 +9,23 @@
 基本的に元にしているのは公式のdocker-library/phpとなります。
 
 https://hub.docker.com/r/fagai/php/
+
+# 保証Extension
+
+* pdo
+* pdo_mysql
+* curl
+* mbstring
+* bcmath
+* opcache
+* intl
+* ctype
+* json
+* xml
+* zip
+
+# Phalcon用はこれに追加で
+
+* gd
+* exif
+* imagick
