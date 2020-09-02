@@ -40,13 +40,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: whoan/docker-build-with-cache-action@v5
-        with:
-          username: fagai
-          password: "${{ secrets.GITHUB_TOKEN }}"
-          registry: docker.pkg.github.com
-          image_name: php
-
+      - uses: satackey/action-docker-layer-caching@v0.0.8
+        
       - name: Build image
         run: docker build . --file ./${{ matrix.images }}/Dockerfile --tag $IMAGE_NAME
 
