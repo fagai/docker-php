@@ -34,6 +34,9 @@ jobs:
       - name: set IMAGE VERSION
         run: echo ::set-env name=IMAGE_VERSION::$(echo "${{ matrix.images }}" | sed -e 's/debian\///g' -e 's/\//-/g')
 
+      - name: docker image pull
+        run: docker pull fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         with:
@@ -43,7 +46,6 @@ jobs:
           registry: docker.pkg.github.com
           repository: fagai/docker-php/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
-          cache_froms: fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
@@ -76,6 +78,9 @@ jobs:
       - name: set IMAGE VERSION
         run: echo ::set-env name=IMAGE_VERSION::$(echo "${{ matrix.images }}" | sed -e 's/debian\///g' -e 's/\//-/g')
 
+      - name: docker image pull
+        run: docker pull fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         with:
@@ -85,7 +90,6 @@ jobs:
           registry: docker.pkg.github.com
           repository: fagai/docker-php/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
-          cache_froms: fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
