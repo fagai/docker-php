@@ -69,7 +69,7 @@ jobs:
           - "7.2/debian/phalcon-fpm"
           - "7.3/alpine/phalcon-fpm"
           - "7.3/debian/phalcon-fpm"
-          - "7.4/alpine/phalcon-fpm"
+          - "7.4/alpine/phalcon4-fpm"
           - "7.4/debian/phalcon4-fpm"
 
     runs-on: ubuntu-latest
