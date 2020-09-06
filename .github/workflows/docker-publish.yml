@@ -45,7 +45,7 @@ jobs:
           repository: fagai/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
           build_args: BUILDKIT_INLINE_CACHE=1
-          cache_froms: fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          cache_froms: docker.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
@@ -95,7 +95,7 @@ jobs:
           repository: fagai/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
           build_args: BUILDKIT_INLINE_CACHE=1
-          cache_froms: fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          cache_froms: docker.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
