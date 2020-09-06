@@ -39,6 +39,8 @@ jobs:
 
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
+        env:
+          DOCKER_BUILDKIT: 1
         with:
           dockerfile: ${{ matrix.images }}/Dockerfile
           username: ${{ github.actor }}
@@ -46,9 +48,12 @@ jobs:
           registry: docker.pkg.github.com
           repository: fagai/docker-php/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
+          cache_froms: fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
+        env:
+          DOCKER_BUILDKIT: 1
         with:
           dockerfile: ${{ matrix.images }}/Dockerfile
           username: ${{ github.actor }}
@@ -83,6 +88,8 @@ jobs:
 
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
+        env:
+          DOCKER_BUILDKIT: 1
         with:
           dockerfile: ${{ matrix.images }}/Dockerfile
           username: ${{ github.actor }}
@@ -90,9 +97,12 @@ jobs:
           registry: docker.pkg.github.com
           repository: fagai/docker-php/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
+          cache_froms: fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
+        env:
+          DOCKER_BUILDKIT: 1
         with:
           dockerfile: ${{ matrix.images }}/Dockerfile
           username: ${{ github.actor }}
