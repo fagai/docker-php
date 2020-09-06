@@ -81,9 +81,6 @@ jobs:
       - name: set IMAGE VERSION
         run: echo ::set-env name=IMAGE_VERSION::$(echo "${{ matrix.images }}" | sed -e 's/debian\///g' -e 's/\//-/g')
 
-      - name: docker image pull
-        run: docker pull fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
         env:
