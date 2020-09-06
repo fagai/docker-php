@@ -12,7 +12,7 @@ on:
 env:
   # TODO: Change variable to your image's name.
   IMAGE_NAME: php
-
+  REGISTRY_URL: docker.pkg.github.com
 jobs:
 
   # Push image to GitHub Packages.
@@ -42,16 +42,16 @@ jobs:
 
       - name: Log into GitHub Container Registry
       # TODO: Create a PAT with `read:packages` and `write:packages` scopes and save it as an Actions secret `CR_PAT`
-        run: echo "${{ secrets.CR_PAT }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.CR_PAT }}" | docker login ${REGISTRY_URL} -u ${{ github.actor }} --password-stdin
 
       - name: Push image to GitHub Container Registry
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=${REGISTRY_URL}/${{ github.repository }}/$IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-          VERSION=$(echo "${{ matrix.images }}" | sed -e 's/\//-/g')
+          VERSION=$(echo "${{ matrix.images }}" | sed -e 's/debian\///g' -e 's/\//-/g')
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
@@ -85,16 +85,16 @@ jobs:
 
       - name: Log into GitHub Container Registry
       # TODO: Create a PAT with `read:packages` and `write:packages` scopes and save it as an Actions secret `CR_PAT`
-        run: echo "${{ secrets.CR_PAT }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.CR_PAT }}" | docker login ${REGISTRY_URL} -u ${{ github.actor }} --password-stdin
 
       - name: Push image to GitHub Container Registry
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=${REGISTRY_URL}/${{ github.repository }}/$IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-          VERSION=$(echo "${{ matrix.images }}" | sed -e 's/\//-/g')
+          VERSION=$(echo "${{ matrix.images }}" | sed -e 's/debian\///g' -e 's/\//-/g')
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
