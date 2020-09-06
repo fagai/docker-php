@@ -22,11 +22,11 @@ jobs:
       matrix:
         images:
           - "7.2/alpine/fpm"
-          - "7.2/stretch/fpm"
+          - "7.2/debian/fpm"
           - "7.3/alpine/fpm"
-          - "7.3/stretch/fpm"
+          - "7.3/debian/fpm"
           - "7.4/alpine/fpm"
-          - "7.4/stretch/fpm"
+          - "7.4/debian/fpm"
 
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
@@ -65,11 +65,11 @@ jobs:
       matrix:
         images:
           - "7.2/alpine/phalcon-fpm"
-          - "7.2/stretch/phalcon-fpm"
+          - "7.2/debian/phalcon-fpm"
           - "7.3/alpine/phalcon-fpm"
-          - "7.3/stretch/phalcon-fpm"
+          - "7.3/debian/phalcon-fpm"
           - "7.4/alpine/phalcon-fpm"
-          - "7.4/stretch/phalcon4-fpm"
+          - "7.4/debian/phalcon4-fpm"
 
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
