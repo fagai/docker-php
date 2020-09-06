@@ -34,6 +34,19 @@ jobs:
       - name: set IMAGE VERSION
         run: echo ::set-env name=IMAGE_VERSION::$(echo "${{ matrix.images }}" | sed -e 's/debian\///g' -e 's/\//-/g')
 
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        env:
+          DOCKER_BUILDKIT: 1
+        with:
+          dockerfile: ${{ matrix.images }}/Dockerfile
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          repository: fagai/${{ env.IMAGE_NAME }}
+          tags: ${{ env.IMAGE_VERSION }}
+          build_args: BUILDKIT_INLINE_CACHE=1
+          cache_froms: fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         env:
@@ -44,19 +57,6 @@ jobs:
           password: ${{ secrets.CR_PAT }}
           registry: docker.pkg.github.com
           repository: fagai/docker-php/${{ env.IMAGE_NAME }}
-          tags: ${{ env.IMAGE_VERSION }}
-          build_args: BUILDKIT_INLINE_CACHE=1
-          cache_froms: docker.pkg.github.com/fagai/docker-php/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v1
-        env:
-          DOCKER_BUILDKIT: 1
-        with:
-          dockerfile: ${{ matrix.images }}/Dockerfile
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-          repository: fagai/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
 
   push-phalcon:
@@ -84,6 +84,19 @@ jobs:
       - name: docker image pull
         run: docker pull fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        env:
+          DOCKER_BUILDKIT: 1
+        with:
+          dockerfile: ${{ matrix.images }}/Dockerfile
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          repository: fagai/${{ env.IMAGE_NAME }}
+          tags: ${{ env.IMAGE_VERSION }}
+          build_args: BUILDKIT_INLINE_CACHE=1
+          cache_froms: fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         env:
@@ -94,17 +107,4 @@ jobs:
           password: ${{ secrets.CR_PAT }}
           registry: docker.pkg.github.com
           repository: fagai/docker-php/${{ env.IMAGE_NAME }}
-          tags: ${{ env.IMAGE_VERSION }}
-          build_args: BUILDKIT_INLINE_CACHE=1
-          cache_froms: docker.pkg.github.com/fagai/docker-php/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v1
-        env:
-          DOCKER_BUILDKIT: 1
-        with:
-          dockerfile: ${{ matrix.images }}/Dockerfile
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-          repository: fagai/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
