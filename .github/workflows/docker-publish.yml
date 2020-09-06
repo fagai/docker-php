@@ -5,6 +5,9 @@ on:
     branches:
       - master
   pull_request:
+  # 定期更新をやる(毎週月曜日)
+  schedule:
+    - cron:  '0 0 * * 1'
 
 env:
   IMAGE_NAME: php
