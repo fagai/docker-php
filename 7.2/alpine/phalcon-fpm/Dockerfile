@@ -1,12 +1,5 @@
 FROM fagai/php:7.2-alpine-fpm
 
-RUN apk add --no-cache autoconf gcc g++ make && \
-    apk add --no-cache libmemcached-dev re2c zlib-dev && \
-    pecl install memcached && \
-    docker-php-ext-enable memcached && \
-    apk del --purge autoconf gcc g++ make && \
-    pecl clear-cache
-
 ENV PHALCON_VERSION 3.4.5
 ENV IMAGE_LIBRARY \
     libjpeg-turbo-dev freetype-dev libpng-dev 
@@ -16,7 +9,13 @@ RUN apk add --no-cache autoconf gcc g++ make imagemagick-dev ${IMAGE_LIBRARY} \
     && docker-php-ext-install gd exif \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
-    && apk del --purge autoconf gcc g++ make \
+    && apk del --purge autoconf gcc g++ make
+
+RUN apk add --no-cache autoconf gcc g++ make && \
+    apk add --no-cache libmemcached-dev re2c zlib-dev && \
+    pecl install memcached && \
+    docker-php-ext-enable memcached && \
+    apk del --purge autoconf gcc g++ make && \
     pecl clear-cache
 
 # install phalcon
