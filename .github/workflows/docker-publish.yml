@@ -42,7 +42,7 @@ jobs:
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         with:
-          dockefile: ./${{ matrix.images }}/Dockerfile
+          dockerfile: ${{ matrix.images }}/Dockerfile
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
           registry: docker.pkg.github.com
@@ -76,7 +76,7 @@ jobs:
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         with:
-          dockefile: ./${{ matrix.images }}/Dockerfile
+          dockerfile: ${{ matrix.images }}/Dockerfile
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
           registry: docker.pkg.github.com
