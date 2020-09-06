@@ -9,14 +9,14 @@ ENV COMPOSER_HOME=/root/composer \
 ENV IMAGE_LIBRARY \
     libfreetype6-dev libjpeg-dev libpng-dev libwebp-dev libghc-bmp-dev
 
-# install gd, imagick, exif
+# install gd, imagick, exif, memcached
 RUN export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" \
     && apt-get update \
-    && apt-get install -y --no-install-recommends libmagickwand-dev ${IMAGE_LIBRARY} \
+    && apt-get install -y --no-install-recommends libmagickwand-dev libz-dev libmemcached-dev ${IMAGE_LIBRARY} \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-webp-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd exif \
-    && pecl install imagick \
-    && docker-php-ext-enable imagick \
+    && pecl install imagick memcached \
+    && docker-php-ext-enable imagick memcached \
     && pecl clear-cache \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
