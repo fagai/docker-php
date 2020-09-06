@@ -11,7 +11,7 @@ ENV IMAGE_LIBRARY \
 
 # install gd, imagick, exif
 RUN export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" \
-    &&apt-get update \
+    && apt-get update \
     && apt-get install -y --no-install-recommends libmagickwand-dev ${IMAGE_LIBRARY} \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install -j$(nproc) gd exif \
