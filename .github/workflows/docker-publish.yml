@@ -2,20 +2,13 @@ name: Docker
 
 on:
   push:
-    # Publish `master` as Docker `latest` image.
     branches:
       - master
-
-  # Run tests for any PRs.
   pull_request:
 
 env:
-  # TODO: Change variable to your image's name.
   IMAGE_NAME: php
 jobs:
-
-  # Push image to GitHub Packages.
-  # See also https://docs.docker.com/docker-hub/builds/
   push:
     strategy:
       matrix:
@@ -48,10 +41,20 @@ jobs:
           registry: docker.pkg.github.com
           repository: fagai/docker-php/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          dockerfile: ${{ matrix.images }}/Dockerfile
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          repository: fagai/${{ env.IMAGE_NAME }}
+          tags: ${{ env.IMAGE_VERSION }}
           
   push-phalcon:
     needs: push
     strategy:
+      fail-fast: false
       matrix:
         images:
           - "7.2/alpine/phalcon-fpm"
@@ -81,4 +84,13 @@ jobs:
           password: ${{ secrets.CR_PAT }}
           registry: docker.pkg.github.com
           repository: fagai/docker-php/${{ env.IMAGE_NAME }}
+          tags: ${{ env.IMAGE_VERSION }}
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          dockerfile: ${{ matrix.images }}/Dockerfile
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          repository: fagai/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
