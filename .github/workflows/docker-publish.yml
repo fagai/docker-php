@@ -49,19 +49,6 @@ jobs:
           build_args: BUILDKIT_INLINE_CACHE=1
           cache_froms: docker.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
-      - name: Push to GitHub Packages(deprecated)
-        uses: docker/build-push-action@v1
-        env:
-          DOCKER_BUILDKIT: 1
-        with:
-          dockerfile: ${{ matrix.images }}/Dockerfile
-          username: ${{ github.actor }}
-          password: ${{ secrets.CR_PAT }}
-          registry: docker.pkg.github.com
-          repository: fagai/docker-php/${{ env.IMAGE_NAME }}
-          tags: ${{ env.IMAGE_VERSION }}
-
-
       - name: Push to GitHub Container Registory
         uses: docker/build-push-action@v1
         env:
@@ -107,18 +94,6 @@ jobs:
           tags: ${{ env.IMAGE_VERSION }}
           build_args: BUILDKIT_INLINE_CACHE=1
           cache_froms: docker.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-
-      - name: Push to GitHub Packages(deprecated)
-        uses: docker/build-push-action@v1
-        env:
-          DOCKER_BUILDKIT: 1
-        with:
-          dockerfile: ${{ matrix.images }}/Dockerfile
-          username: ${{ github.actor }}
-          password: ${{ secrets.CR_PAT }}
-          registry: docker.pkg.github.com
-          repository: fagai/docker-php/${{ env.IMAGE_NAME }}
-          tags: ${{ env.IMAGE_VERSION }}
 
       - name: Push to GitHub Container Registory
         uses: docker/build-push-action@v1
