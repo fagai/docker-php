@@ -80,7 +80,7 @@ jobs:
       - uses: actions/checkout@v2
         
       - name: set IMAGE VERSION
-        run: echo ::set-env name=IMAGE_VERSION::$(echo "${{ matrix.images }}" | sed -e 's/debian\///g' -e 's/\//-/g')
+        run: echo "IMAGE_VERSION=$(echo '${{ matrix.images }}' | sed -e 's/debian\///g' -e 's/\//-/g')" >> $GITHUB_ENV
 
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
