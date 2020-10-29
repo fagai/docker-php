@@ -48,6 +48,7 @@ jobs:
           tags: ${{ env.IMAGE_VERSION }}
           build_args: BUILDKIT_INLINE_CACHE=1
           cache_froms: docker.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          push: ${{ github.ref == 'refs/heads/master' }}
 
       - name: Push to GitHub Container Registory
         uses: docker/build-push-action@v1
@@ -60,6 +61,7 @@ jobs:
           registry: ghcr.io
           repository: fagai/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
+          push: ${{ github.ref == 'refs/heads/master' }}
 
   push-phalcon:
     needs: push
@@ -94,6 +96,7 @@ jobs:
           tags: ${{ env.IMAGE_VERSION }}
           build_args: BUILDKIT_INLINE_CACHE=1
           cache_froms: docker.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          push: ${{ github.ref == 'refs/heads/master' }}
 
       - name: Push to GitHub Container Registory
         uses: docker/build-push-action@v1
@@ -106,3 +109,4 @@ jobs:
           registry: ghcr.io
           repository: fagai/${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_VERSION }}
+          push: ${{ github.ref == 'refs/heads/master' }}
