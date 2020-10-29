@@ -10,6 +10,10 @@
 
 https://hub.docker.com/r/fagai/php/
 
+# installed library
+
+* composer 2.x
+
 # 保証Extension
 
 * pdo
