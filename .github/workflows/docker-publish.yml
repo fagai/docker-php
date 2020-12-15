@@ -27,41 +27,45 @@ jobs:
 
     steps:
       - name: cancel old workflow
-        uses: styfle/cancel-workflow-action@0.4.1
+        uses: styfle/cancel-workflow-action@0.6.0
         with:
           access_token: ${{ github.token }}
 
       - uses: actions/checkout@v2
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: set IMAGE VERSION
         run: echo "IMAGE_VERSION=$(echo '${{ matrix.images }}' | sed -e 's/debian\///g' -e 's/\//-/g')" >> $GITHUB_ENV
 
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v1
-        env:
-          DOCKER_BUILDKIT: 1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
         with:
-          dockerfile: ${{ matrix.images }}/Dockerfile
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-          repository: fagai/${{ env.IMAGE_NAME }}
-          tags: ${{ env.IMAGE_VERSION }}
-          build_args: BUILDKIT_INLINE_CACHE=1
-          cache_froms: docker.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-          push: ${{ github.ref == 'refs/heads/master' }}
 
-      - name: Push to GitHub Container Registory
-        uses: docker/build-push-action@v1
-        env:
-          DOCKER_BUILDKIT: 1
+      - name: Login to GitHub Container Registory
+        uses: docker/login-action@v1 
         with:
-          dockerfile: ${{ matrix.images }}/Dockerfile
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
-          registry: ghcr.io
-          repository: fagai/${{ env.IMAGE_NAME }}
-          tags: ${{ env.IMAGE_VERSION }}
+
+      - name: Build And Push
+        uses: docker/build-push-action@v2
+        with:
+          file: ${{ matrix.images }}/Dockerfile
+          platforms: linux/amd64
+          tags: |
+            fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+            ghcr.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
           push: ${{ github.ref == 'refs/heads/master' }}
+          cache-from: type=registry,ref=fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          cache-to: type=inline
 
   push-phalcon:
     needs: push
@@ -80,33 +84,37 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
         
       - name: set IMAGE VERSION
         run: echo "IMAGE_VERSION=$(echo '${{ matrix.images }}' | sed -e 's/debian\///g' -e 's/\//-/g')" >> $GITHUB_ENV
 
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v1
-        env:
-          DOCKER_BUILDKIT: 1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
         with:
-          dockerfile: ${{ matrix.images }}/Dockerfile
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-          repository: fagai/${{ env.IMAGE_NAME }}
-          tags: ${{ env.IMAGE_VERSION }}
-          build_args: BUILDKIT_INLINE_CACHE=1
-          cache_froms: docker.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-          push: ${{ github.ref == 'refs/heads/master' }}
 
-      - name: Push to GitHub Container Registory
-        uses: docker/build-push-action@v1
-        env:
-          DOCKER_BUILDKIT: 1
+      - name: Login to GitHub Container Registory
+        uses: docker/login-action@v1 
         with:
-          dockerfile: ${{ matrix.images }}/Dockerfile
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
-          registry: ghcr.io
-          repository: fagai/${{ env.IMAGE_NAME }}
-          tags: ${{ env.IMAGE_VERSION }}
+
+      - name: Build And Push
+        uses: docker/build-push-action@v2
+        with:
+          file: ${{ matrix.images }}/Dockerfile
+          platforms: linux/amd64
+          tags: |
+            fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+            ghcr.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
           push: ${{ github.ref == 'refs/heads/master' }}
+          cache-from: type=registry,ref=fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          cache-to: type=inline
