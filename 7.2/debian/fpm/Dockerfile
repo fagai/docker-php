@@ -8,9 +8,13 @@ ENV COMPOSER_HOME=/root/composer \
 # package install
 RUN apt-get update \
     && apt-get install -y --no-install-recommends zlib1g-dev curl libcurl4 libcurl4-gnutls-dev unzip libzip-dev libicu-dev libxml2-dev libonig-dev \
-    && docker-php-ext-install -j$(nproc) pdo pdo_mysql curl mbstring bcmath opcache intl ctype json xml zip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+RUN php -m
+
+# installed: pdo, pdo_sqlite, openssl, ctype, curl, mbstring, xml
+RUN docker-php-ext-install -j$(nproc) pdo_mysql bcmath opcache intl zip
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
