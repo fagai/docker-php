@@ -19,7 +19,7 @@ RUN apk add --no-cache autoconf gcc g++ make pcre-dev \
     && apk del --purge autoconf gcc g++ make \
     && pecl clear-cache
 
-ENV PHALCON_VERSION 4.0.6
+ENV PHALCON_VERSION 4.1.2
 
 # install phalcon
 RUN curl -LO "https://github.com/phalcon/cphalcon/archive/v${PHALCON_VERSION}.tar.gz" \

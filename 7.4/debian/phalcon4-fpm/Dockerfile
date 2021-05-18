@@ -4,7 +4,7 @@ FROM fagai/php:7.4-fpm
 ENV COMPOSER_HOME=/root/composer \
     PATH=$COMPOSER_HOME/vendor/bin:$PATH \
     COMPOSER_ALLOW_SUPERUSER=1 \
-    PHALCON_VERSION=4.0.6
+    PHALCON_VERSION=4.1.2
 
 ENV IMAGE_LIBRARY \
     libfreetype6-dev libjpeg-dev libpng-dev libwebp-dev libghc-bmp-dev
