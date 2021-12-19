@@ -23,7 +23,9 @@ jobs:
           - "7.4/alpine/fpm"
           - "7.4/debian/fpm"
           - "8.0/alpine/fpm"
+          - "8.1/alpine/fpm"
           - "8.0/debian/fpm"
+          - "8.1/debian/fpm"
 
     runs-on: ubuntu-latest
 
