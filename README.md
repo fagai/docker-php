@@ -18,6 +18,7 @@ https://hub.docker.com/r/fagai/php/
 
 * pdo
 * pdo_mysql
+* pdo_pgsql
 * curl
 * mbstring
 * bcmath
