@@ -69,7 +69,7 @@ jobs:
             ghcr.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
           push: ${{ github.ref == 'refs/heads/master' }}
           cache-from: type=registry,ref=fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-          cache-to: type=registry,ref=fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }},mode=max
+          cache-to: type=inline
   push-phalcon:
     needs: push
     strategy:
@@ -120,4 +120,4 @@ jobs:
             ghcr.io/fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
           push: ${{ github.ref == 'refs/heads/master' }}
           cache-from: type=registry,ref=fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-          cache-to: type=registry,ref=fagai/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }},mode=max
+          cache-to: type=inline
