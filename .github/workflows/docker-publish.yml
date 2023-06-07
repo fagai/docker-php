@@ -16,16 +16,16 @@ jobs:
     strategy:
       matrix:
         images:
-          - "7.2/alpine/fpm"
-          - "7.2/debian/fpm"
           - "7.3/alpine/fpm"
           - "7.3/debian/fpm"
           - "7.4/alpine/fpm"
           - "7.4/debian/fpm"
           - "8.0/alpine/fpm"
-          - "8.1/alpine/fpm"
           - "8.0/debian/fpm"
+          - "8.1/alpine/fpm"
           - "8.1/debian/fpm"
+          - "8.2/alpine/fpm"
+          - "8.2/debian/fpm"
 
     runs-on: ubuntu-latest
 
@@ -76,8 +76,6 @@ jobs:
       fail-fast: false
       matrix:
         images:
-          - "7.2/alpine/phalcon-fpm"
-          - "7.2/debian/phalcon-fpm"
           - "7.3/alpine/phalcon-fpm"
           - "7.3/debian/phalcon-fpm"
           - "7.4/alpine/phalcon4-fpm"
