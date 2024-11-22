@@ -1,8 +1,9 @@
 FROM php:8.0-fpm
 
 # set environment
-ENV COMPOSER_HOME=/root/composer \
-    PATH=$COMPOSER_HOME/vendor/bin:$PATH \
+ENV COMPOSER_HOME=/root/composer
+
+ENV PATH=$COMPOSER_HOME/vendor/bin:$PATH \
     COMPOSER_ALLOW_SUPERUSER=1
 
 RUN php -m
