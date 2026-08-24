@@ -30,6 +30,8 @@ jobs:
           - "8.3/debian/fpm"
           - "8.4/alpine/fpm"
           - "8.4/debian/fpm"
+          - "8.5/alpine/fpm"
+          - "8.5/debian/fpm"
 
     runs-on: ubuntu-latest
     concurrency:
